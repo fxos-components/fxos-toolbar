@@ -1,4 +1,4 @@
-# &lt;gaia-header&gt;
+# &lt;gaia-toolbar&gt;
 
 ## Installation
 
