@@ -15,9 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "gaia-component-utils": "gaia-components/gaia-component-utils#~0.1.0"
-  },
-  "devDependencies": {
+    "gaia-component-utils": "gaia-components/gaia-component-utils#~0.1.0",
     "gaia-icons": "gaia-components/gaia-icons#master"
   }
 }
