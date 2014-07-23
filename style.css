@@ -8,44 +8,24 @@
  */
 
 gaia-toolbar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4rem;
-  background: rgba(0,0,0, 0.85);
-  color: #fff;
+  display: flex;
+  height: 45px;
+  background: #fff;
 }
 
-gaia-toolbar ul {
-  float: left;
-  height: 100%;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-gaia-toolbar ul:last-of-type {
-  float: right;
-}
-
-gaia-toolbar li {
-  float: left;
-  height: 100%;
-}
-
-gaia-toolbar button {
-  width: 5.5rem;
-  height: 100%;
+gaia-toolbar button,
+gaia-toolbar a {
+  flex: 1;
+  font-size: 30px;
+  color: #858585;
   border: none;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: center;
+  background: none;
+  margin: 0;
   padding: 0;
-  border-radius: 0;
-  color: inherit;
 }
 
-gaia-toolbar button:active {
-  background-color: #008aaa;
+gaia-toolbar button:active,
+gaia-toolbar a:active {
+  color: #fff;
+  background-color: #b2f2ff;
 }

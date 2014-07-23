@@ -1,6 +1,6 @@
 {
   "name": "gaia-toolbar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/gaia-components/gaia-toolbar",
   "authors": [
     "rnowm <arnau@arnaumarch.com>"
@@ -16,5 +16,8 @@
   ],
   "dependencies": {
     "gaia-component-utils": "gaia-components/gaia-component-utils#~0.1.0"
+  },
+  "devDependencies": {
+    "gaia-icons": "gaia-components/gaia-icons#master"
   }
 }
