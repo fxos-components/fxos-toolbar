@@ -6,11 +6,8 @@
  * Dependencies
  */
 
-var pressed = require('pressed');
 var GaiaDialog = require('gaia-dialog');
-
-// Needs icons loaded
-require('gaia-icons');
+var pressed = require('pressed');
 
 /**
  * Locals
@@ -26,15 +23,6 @@ var slice = [].slice;
  */
 var proto = Object.create(HTMLElement.prototype);
 
-/**
- * Runs when an instance of `GaiaTabs`
- * is first created.
- *
- * The initial value of the `select` attribute
- * is used to select a tab.
- *
- * @private
- */
 proto.createdCallback = function() {
   this.createShadowRoot().innerHTML = template;
 
@@ -50,7 +38,6 @@ proto.createdCallback = function() {
   addEventListener('resize', this.reflow_raf);
   this.shadowStyleHack();
   pressed(this.shadowRoot);
-
 
   if (document.readyState === 'loading') {
     addEventListener('load', this.reflow.bind(this));
@@ -68,27 +55,46 @@ proto.attachedCallback = function() {
 
 proto.reflow = function() {
   this.release();
-
-  var container = this.els.inner.getBoundingClientRect();
-  var total = this.getTotalItemLength();
-  var overflowed = Math.max(total - container.width, 0);
-
-  // console.log('overflowed', container.width, total);
-
-  if (overflowed > 3) {
-    this.onOverflowed(overflowed, total);
-  }
-
-  // Make sure it's shown
+  var overflow = this.getOverflowData();
+  if (overflow.overflowed) { this.onOverflowed(overflow); }
   this.style.visibility = '';
 };
 
-proto.onOverflowed = function(overflowed, total) {
-  var items = slice.call(this.children, 0, -1);
-  var itemWidth = total / items.length;
-  var numToHide = Math.ceil(overflowed / itemWidth) + 1;
+proto.getOverflowData = function() {
+  var space = this.els.inner.clientWidth;
+  var child = this.children[0];
+  var overflowed = false;
+  var willFit = 0;
+  var total = 0;
+  var overflow;
+  var width;
 
-  console.log(overflowed, items, total, numToHide, itemWidth);
+  while (child) {
+    width = child.clientWidth;
+    overflow = width + total - space;
+
+    if (overflow > 3) {
+      overflowed = true;
+      break;
+    }
+
+    willFit++;
+    total += width;
+    child = child.nextElementSibling;
+  }
+
+  return {
+    willFit: willFit,
+    remaining: space - total,
+    overflowed: overflowed
+  };
+};
+
+proto.onOverflowed = function(overflow) {
+  var items = slice.call(this.children, 0, -1);
+  var minMoreButtonWidth = 70;
+  var extra = overflow.remaining < minMoreButtonWidth ? 1 : 0;
+  var numToHide = items.length - overflow.willFit + extra;
 
   this.hiddenChildren = slice.call(items, 0 - numToHide);
   this.hiddenChildren.forEach(function(el) { el.classList.add('overflowing'); });
@@ -102,7 +108,6 @@ proto.release = function() {
     el.classList.remove('overflowing');
   });
 };
-
 
 proto.getTotalItemLength = function() {
   return [].reduce.call(this.children, function(total, el) {
@@ -121,8 +126,8 @@ proto.openOverflow = function(e) {
   this.dialog = new GaiaDialog();
 
   this.hiddenChildren.forEach(function(el) {
-    el.style.display = '';
     this.dialog.appendChild(el);
+    el.classList.remove('overflowing');
   }, this);
 
   this.shadowRoot.appendChild(this.dialog);
@@ -133,30 +138,13 @@ proto.openOverflow = function(e) {
 
 proto.onDialogClosed = function() {
   this.hiddenChildren.forEach(function(el) {
-    el.style.display = 'none';
+    el.classList.add('overflowing');
     this.insertBefore(el, this.lastChild);
   }, this);
 
   this.dialog.remove();
   this.dialog = null;
 };
-
-function rafWrap(fn, ctx) {
-  var raf = requestAnimationFrame;
-  var frame;
-
-  return function() {
-    if (frame) { return; }
-    var args = arguments;
-
-    frame = raf(function() {
-      raf(function() {
-        frame = null;
-        fn.apply(ctx, arguments);
-      });
-    });
-  };
-}
 
 var template = `
 <style>
@@ -189,27 +177,20 @@ var template = `
 
 .-content > *,
 .more-button {
-  position: relative;
-  display: flex;
+  box-sizing: border-box;
+  flex: 1 0 0;
   height: 100%;
-  padding: 0 24px;
+  padding: 0 22px;
   border: 0;
-  align-items: center;
-  justify-content: center;
+  line-height: 45px;
   font-style: italic;
   font-weight: lighter;
   background: none;
   cursor: pointer;
-  color: inherit;
   white-space: nowrap;
 
-  box-sizing: border-box;
-  flex-grow: 1;
-  flex-shrink: 0;
-  flex-basis: 0;
-
   color:
-    var(--text-color);
+    var(--text-color, inherit);
 }
 
 /**
@@ -238,6 +219,10 @@ var template = `
   opacity: 0.3;
 }
 
+.-content > [data-icon] {
+  font-size: 0;
+}
+
 /** Style
  ---------------------------------------------------------*/
 
@@ -250,10 +235,10 @@ style {
 
 .more-button {
   display: none;
-  background: none;
-  border: 0;
-  padding: 0;
 }
+
+/** More Button Icon
+ ---------------------------------------------------------*/
 
 .more-button:before {
   font-family: 'gaia-icons';
@@ -262,8 +247,11 @@ style {
   text-rendering: optimizeLegibility;
   font-style: normal;
   font-size: 32px;
-  line-height: 1;
 }
+
+/**
+ * .overflowed
+ */
 
 .overflowed .more-button {
   display: block;
@@ -275,6 +263,24 @@ style {
   <content></content>
   <button class="more-button"></button>
 </div>`;
+
+
+function rafWrap(fn, ctx) {
+  var raf = requestAnimationFrame;
+  var frame;
+
+  return function() {
+    if (frame) { return; }
+    var args = arguments;
+
+    frame = raf(function() {
+      raf(function() {
+        frame = null;
+        fn.apply(ctx, arguments);
+      });
+    });
+  };
+}
 
 // Register and expose the constructor
 module.exports = document.registerElement('gaia-toolbar', { prototype: proto });
