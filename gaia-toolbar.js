@@ -187,6 +187,7 @@ var template = `
   height: 100%;
   padding: 0 22px;
   border: 0;
+  font-size: 17px;
   line-height: 45px;
   font-style: italic;
   font-weight: lighter;
