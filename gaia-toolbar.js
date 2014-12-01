@@ -37,7 +37,6 @@ proto.createdCallback = function() {
   this.reflow_raf = rafWrap(this.reflow, this);
   addEventListener('resize', this.reflow_raf);
   this.shadowStyleHack();
-  pressed(this.shadowRoot);
 
   if (document.readyState === 'loading') {
     addEventListener('load', this.reflow.bind(this));
@@ -194,6 +193,7 @@ var template = `
   background: none;
   cursor: pointer;
   white-space: nowrap;
+  transition: color 200ms 300ms;
 
   color:
     var(--text-color, inherit);
@@ -203,8 +203,9 @@ var template = `
  * :active
  */
 
-.more-button.pressed,
-.-content > .pressed {
+.more-button :active,
+.-content > :active {
+  transition: none;
   color: var(--highlight-color);
 }
 
