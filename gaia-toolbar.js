@@ -6,8 +6,7 @@
  * Dependencies
  */
 
-var GaiaDialog = require('gaia-dialog');
-var pressed = require('pressed');
+var GaiaDialogMenu = require('gaia-dialog-menu');
 
 /**
  * Locals
@@ -122,27 +121,28 @@ proto.shadowStyleHack = function() {
 };
 
 proto.openOverflow = function(e) {
-  this.dialog = new GaiaDialog();
+  this.dialog = new GaiaDialogMenu();
 
   this.hiddenChildren.forEach(function(el) {
     this.dialog.appendChild(el);
     el.classList.remove('overflowing');
   }, this);
 
-  this.shadowRoot.appendChild(this.dialog);
+  this.appendChild(this.dialog);
   this.dialog.addEventListener('click', this.dialog.close.bind(this.dialog));
   this.dialog.addEventListener('closed', this.onDialogClosed.bind(this));
   this.dialog.open(e);
 };
 
 proto.onDialogClosed = function() {
+  this.dialog.remove();
+  this.dialog = null;
+
   this.hiddenChildren.forEach(function(el) {
     el.classList.add('overflowing');
     this.insertBefore(el, this.lastChild);
   }, this);
 
-  this.dialog.remove();
-  this.dialog = null;
 };
 
 var template = `
@@ -184,7 +184,8 @@ var template = `
   box-sizing: border-box;
   flex: 1 0 0;
   height: 100%;
-  padding: 0 22px;
+  margin: 0;
+  padding: 0 6px;
   border: 0;
   font-size: 17px;
   line-height: 45px;
@@ -242,6 +243,7 @@ style {
 
 .more-button {
   display: none;
+  flex: 0.7;
 }
 
 /** More Button Icon
