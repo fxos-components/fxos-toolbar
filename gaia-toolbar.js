@@ -292,7 +292,14 @@ function rafWrap(fn, ctx) {
 }
 
 // Register and expose the constructor
-module.exports = document.registerElement('gaia-toolbar', { prototype: proto });
+try {
+  module.exports = document.registerElement('gaia-toolbar', { prototype: proto });
+  module.exports.proto = proto;
+} catch (e) {
+  if (e.name !== 'NotSupportedError') {
+    throw e;
+  }
+}
 
 });})(typeof define=='function'&&define.amd?define
 :(function(n,w){'use strict';return typeof module=='object'?function(c){
