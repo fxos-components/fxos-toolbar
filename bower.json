@@ -19,6 +19,7 @@
     "gaia-icons": "gaia-components/gaia-icons#~0.6.1"
   },
   "dependencies": {
-    "gaia-dialog": "gaia-components/gaia-dialog"
+    "gaia-dialog": "gaia-components/gaia-dialog",
+    "gaia-component": "gaia-components/gaia-component#~0.2.0"
   }
 }
