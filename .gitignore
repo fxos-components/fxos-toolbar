@@ -1,2 +1,8 @@
-node_modules
 bower_components
+node_modules
+!examples/demo/node_modules
+.DS_Store
+firefox
+marionette-mocha-gecko.log
+npm-debug.log
+gecko.log

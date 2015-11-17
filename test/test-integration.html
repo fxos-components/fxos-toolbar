@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>fxos-toolbar</title>
+  <meta name="description" content="Integration tests for fxos-toolbar" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="../node_modules/fxos-theme/fxos-theme.css">
+  <link rel="stylesheet" href="../node_modules/fxos-font/fxos-font.css">
+  <link rel="stylesheet" href="../node_modules/fxos-icons/fxos-icons.css">
+  <script src="../node_modules/fxos-component/fxos-component.js"></script>
+  <script src="../node_modules/fxos-dialog/fxos-dialog.js"></script>
+  <script src="../node_modules/fxos-dialog/fxos-dialog-menu.js"></script>
+  <script src="../fxos-toolbar.js"></script>
+</head>
+<body role="application">
+  <section id="section">
+    <fxos-toolbar id="gt0" class="l-mb-mega" aria-label="Communications">
+      <button data-icon="recent-calls" aria-label="Recent calls"></button>
+      <button data-icon="user" aria-label="User"></button>
+      <button data-icon="dialpad" aria-label="Dialpad"></button>
+      <button data-icon="sync" aria-label="Sync"></button>
+      <button data-icon="camera" aria-label="Camera"></button>
+    </fxos-toolbar>
+
+    <fxos-toolbar id="gt1" class="l-mb-mega" aria-label="Call Log">
+      <button data-icon="recent-calls" aria-label="Recent Calls"></button>
+      <button data-icon="user" aria-label="User"></button>
+    </fxos-toolbar>
+
+    <fxos-toolbar id="gt2" aria-label="Simple toolbar">
+      <button>Phone</button>
+      <button>Contact</button>
+      <button>Dialer</button>
+      <button>Refresh</button>
+      <button>Add to homescreen</button>
+    </fxos-toolbar>
+  </section>
+</body>
+</html>

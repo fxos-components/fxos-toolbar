@@ -1,27 +1,23 @@
 {
-  "name": "gaia-toolbar",
-  "version": "0.0.0",
+  "name": "fxos-toolbar",
+  "homepage": "https://github.com/fxos-components/fxos-toolbar",
   "authors": [
     "Wilson Page <wilsonpage@me.com>"
   ],
-  "main": "script.js",
+  "main": "fxos-toolbar.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "examples",
     "test",
     "tests",
+    "index.html",
+    "package.json",
     "README.md"
   ],
-  "devDependencies": {
-    "gaia-icons": "gaia-components/gaia-icons#~0.10.0",
-    "gaia-theme": "gaia-components/gaia-theme#~0.5.0",
-    "base": "gaia-components/base"
-  },
   "dependencies": {
-    "gaia-dialog": "gaia-components/gaia-dialog",
-    "gaia-component": "gaia-components/gaia-component#~0.2.0"
+    "fxos-dialog": "fxos-components/fxos-dialog#~2.0.1",
+    "fxos-component": "fxos-components/fxos-component#~1.0.3"
   }
 }
