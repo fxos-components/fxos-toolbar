@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>&lt;fxos-toolbar&gt;</title>
+  <meta name="description" content="fxos-toolbar example" />
+  <meta name="defaultLanguage" content="en-US">
+  <meta name="availableLanguages" content="en-US">
+  <link rel="stylesheet" type="text/css" href="node_modules/fxos-theme/fxos-theme.css">
+  <link rel="stylesheet" type="text/css" href="node_modules/fxos-icons/fxos-icons.css">
+  <link rel="stylesheet" type="text/css" href="node_modules/fxos-font/fxos-font.css">
+  <link rel="localization" href="locales/fxos-toolbar.{locale}.l20n">
+  <script src="node_modules/l20n/dist/bundle/web/l20n.js"></script>
+  <script src="node_modules/fxos-theme/lib/fxos-theme-selector.js"></script>
+  <script src="node_modules/fxos-component/fxos-component.js"></script>
+  <script src="node_modules/fxos-dialog/fxos-dialog.js"></script>
+  <script src="node_modules/fxos-dialog/fxos-dialog-menu.js"></script>
+  <script src="node_modules/fxos-toolbar/fxos-toolbar.js"></script>
+  <style type="text/css">
+
+    body {
+      padding: 16px;
+      padding-top: 48px;
+    }
+
+  </style>
+</head>
+<body role="application">
+  <gaia-theme-selector></gaia-theme-selector>
+  <h1 class="large l-align-center l-mb-mega">&lt;fxos-toolbar&gt;</h1>
+  <button id="append">Add one</button>
+  <section id="section">
+    <fxos-toolbar class="l-mb-mega" aria-label="Communications">
+      <button data-icon="recent-calls" aria-label="Recent calls"></button>
+      <button data-icon="user" aria-label="User"></button>
+      <button data-icon="dialpad" aria-label="Dialpad"></button>
+      <button data-icon="sync" aria-label="Sync"></button>
+      <button data-icon="camera" aria-label="Camera"></button>
+    </fxos-toolbar>
+
+    <fxos-toolbar class="l-mb-mega" aria-label="Call log">
+      <button data-icon="recent-calls" aria-label="Recent calls"></button>
+      <button data-icon="user" aria-label="User"></button>
+    </fxos-toolbar>
+
+    <fxos-toolbar aria-label="Simple toolbar">
+      <button>Phone</button>
+      <button>Contact</button>
+      <button>Dialer</button>
+      <button>Refresh</button>
+      <button>Add to homescreen</button>
+    </fxos-toolbar>
+  </section>
+
+  <script>
+  /*jshint esnext:true*/
+  /* global append, section */
+  'use strict';
+
+  append.onclick = add;
+
+  function add() {
+    var div = document.createElement('div');
+
+    div.innerHTML = `
+      <fxos-toolbar aria-label="Dialer">
+        <div>Phone</div>
+        <div>Contact</div>
+        <div>Dialer</div>
+        <div>Refresh</div>
+        <div>Add to homescreen</div>
+      </fxos-toolbar>`;
+
+    section.appendChild(div.firstElementChild);
+  }
+
+  </script>
+</body>
+</html>
