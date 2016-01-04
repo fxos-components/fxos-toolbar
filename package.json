@@ -1,7 +1,7 @@
 {
   "name": "fxos-toolbar",
   "description": "A toolbar comopnent that is groups buttons and other controls together",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/fxos-components/fxos-toolbar",
   "license": "MIT",
   "main": "fxos-toolbar.js",
